@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gestión de Pacientes</title>
+  <title>Gestión de Atenciones Médicas</title>
   <link href="../adi_bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -63,13 +63,13 @@
           <a class="nav-link" href="../Home.php">Principal</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="index.php">Pacientes</a>
+          <a class="nav-link" href="../paciente/index.php">Pacientes</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="../especialidad/index.php">Especialidades</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="../atencion_medica/index.php">Atención Médica</a>
+          <a class="nav-link active" aria-current="page" href="index.php">Atención Médica</a>
         </li>
       </ul>
     </div>
@@ -78,9 +78,9 @@
   
   <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-3">
-      <h2>Lista de Pacientes</h2>
+      <h2>Lista de Atenciones Médicas</h2>
       <div>
-        <a href="create_paciente.php" class="btn btn-primary"><i class="fas fa-plus"></i> Agregar Nuevo Paciente</a>
+        <a href="create_atencion.php" class="btn btn-primary"><i class="fas fa-plus"></i> Registrar Atención</a>
         <a href="generar_pdf.php" target="_blank" class="btn btn-secondary"><i class="fas fa-file-pdf"></i> Generar PDF</a>
       </div>
     </div>
@@ -88,11 +88,11 @@
       <table class="table table-dark table-striped table-hover">
         <thead>
           <tr>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>F. Nacimiento</th>
-            <th>Dirección</th>
-            <th>Teléfono</th>
+            <th>Paciente</th>
+            <th>Especialidad</th>
+            <th>Fecha de Atención</th>
+            <th>Diagnóstico</th>
+            <th>Tratamiento</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -100,25 +100,25 @@
           <?php
           include 'db.php';
   
-          $sql = "SELECT * FROM pacientes";
+          $sql = "SELECT am.id, p.nombre AS paciente_nombre, p.apellido AS paciente_apellido, e.nombre AS especialidad_nombre, am.fecha_atencion, am.diagnostico, am.tratamiento FROM atencion_medica am JOIN pacientes p ON am.id_paciente = p.id JOIN especialidad e ON am.id_especialidad = e.id";
           $res = $con->query($sql);
   
           if ($res->num_rows > 0) {
               while($fila = $res->fetch_assoc()) {
                   echo "<tr>";
-                  echo "<td>" . htmlspecialchars($fila["nombre"]) . "</td>";
-                  echo "<td>" . htmlspecialchars($fila["apellido"]) . "</td>";
-                  echo "<td>" . htmlspecialchars($fila["fecha_nacimiento"]) . "</td>";
-                  echo "<td>" . htmlspecialchars($fila["direccion"]) . "</td>";
-                  echo "<td>" . htmlspecialchars($fila["telefono"]) . "</td>";
+                  echo "<td>" . htmlspecialchars($fila["paciente_nombre"]) . " " . htmlspecialchars($fila["paciente_apellido"]) . "</td>";
+                  echo "<td>" . htmlspecialchars($fila["especialidad_nombre"]) . "</td>";
+                  echo "<td>" . htmlspecialchars($fila["fecha_atencion"]) . "</td>";
+                  echo "<td>" . htmlspecialchars($fila["diagnostico"]) . "</td>";
+                  echo "<td>" . htmlspecialchars($fila["tratamiento"]) . "</td>";
                   echo "<td>";
-                  echo "<a href='edit_paciente.php?id=" . $fila["id"] . "' class='btn btn-sm btn-warning me-2'><i class='fas fa-edit'></i> Editar</a>";
-                  echo "<a href='delete_paciente.php?id=" . $fila["id"] . "' class='btn btn-sm btn-danger'><i class='fas fa-trash'></i> Eliminar</a>";
+                  echo "<a href='edit_atencion.php?id=" . $fila["id"] . "' class='btn btn-sm btn-warning me-2'><i class='fas fa-edit'></i> Editar</a>";
+                  echo "<a href='delete_atencion.php?id=" . $fila["id"] . "' class='btn btn-sm btn-danger'><i class='fas fa-trash'></i> Eliminar</a>";
                   echo "</td>";
                   echo "</tr>";
               }
           } else {
-              echo "<tr><td colspan='6' class='text-center'>No se encontraron pacientes</td></tr>";
+              echo "<tr><td colspan='6' class='text-center'>No se encontraron atenciones médicas</td></tr>";
           }
           $con->close();
           ?>

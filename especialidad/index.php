@@ -68,6 +68,9 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="index.php">Especialidades</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../atencion_medica/index.php">Atención Médica</a>
+        </li>
       </ul>
     </div>
   </div>

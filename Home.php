@@ -104,6 +104,9 @@ $nomUsu = htmlspecialchars($_SESSION['usuario']);
         <li class="nav-item">
           <a class="nav-link" href="./especialidad/index.php">Especialidades</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="./atencion_medica/index.php">Atención Médica</a>
+        </li>
       </ul>
     </div>
   </div>
